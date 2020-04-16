@@ -1,9 +1,8 @@
 import cv2 
 import pytesseract 
 
-def extract_image_tags(image):
-    # Mention the installed location of Tesseract-OCR in your system 
-    pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
+def extract_image_tags(image_name):
+    image=cv2.imread(str(image_name)) 
     # Preprocessing the image starts 
     # Convert the image to gray scale 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
@@ -24,7 +23,8 @@ def extract_image_tags(image):
     im2 = img.copy() 
     # Looping through the identified contours 
     # Then rectangular part is cropped and passed on
-    # to pytesseract for extracting text from it 
+    # to pytesseract for extracting text from it
+    text=[]
     for cnt in contours: 
         x, y, w, h = cv2.boundingRect(cnt) 
         # Drawing a rectangle on copied image 
@@ -32,19 +32,21 @@ def extract_image_tags(image):
        # Cropping the text block for giving input to OCR 
         cropped = im2[y:y + h, x:x + w] 
         #set languaege as english and set whitelist for chars and digits
-        custom_config = r'-l eng -c tessedit_char_whitelist=0123456789abcdefghijklmnopqrstuvwxyz --psm 6'
+        custom_config = r'-l eng -c tessedit_char_whitelist=" "abcdefghijklmnopqrstuvwxyz --psm 6'
+        #custom_config = r'-l eng -c tessedit_char_whitelist=" "0123456789abcdefghijklmnopqrstuvwxyz --psm 6'
         # Apply OCR on the cropped image 
-        text = pytesseract.image_to_string(cropped, config=custom_config)    
-        #code for text preprocessing here 
-        print(text)  #it has to return all text 
+        text.append(pytesseract.image_to_string(cropped, config=custom_config).replace("\n"," ")) 
+        #code for text preprocessing here (kill tags with two char)
+    return text  
     
 
     
     
     
     
-    
-      
+# Mention the installed location of Tesseract-OCR in your system 
+pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'      
 # Read image from which text needs to be extracted 
-img = cv2.imread("text.JPG") 
-extract_image_tags(img)
+img_name= "internet.jpg" 
+t=extract_image_tags(img_name)
+print(t)
