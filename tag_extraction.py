@@ -2,7 +2,7 @@ import cv2
 import pytesseract 
 
 def extract_image_tags(image_name):
-    image=cv2.imread(str(image_name)) 
+    img=cv2.imread(str(image_name)) 
     # Preprocessing the image starts 
     # Convert the image to gray scale 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
@@ -32,8 +32,8 @@ def extract_image_tags(image_name):
        # Cropping the text block for giving input to OCR 
         cropped = im2[y:y + h, x:x + w] 
         #set languaege as english and set whitelist for chars and digits
-        custom_config = r'-l eng -c tessedit_char_whitelist=" "abcdefghijklmnopqrstuvwxyz --psm 6'
-        #custom_config = r'-l eng -c tessedit_char_whitelist=" "0123456789abcdefghijklmnopqrstuvwxyz --psm 6'
+        #custom_config = r'-l eng -c tessedit_char_whitelist=" "abcdefghijklmnopqrstuvwxyz --psm 6'
+        custom_config = r'-l eng -c tessedit_char_whitelist=" "0123456789abcdefghijklmnopqrstuvwxyz --psm 6'
         # Apply OCR on the cropped image 
         text.append(pytesseract.image_to_string(cropped, config=custom_config).replace("\n"," ")) 
         #code for text preprocessing here (kill tags with two char)
@@ -45,8 +45,9 @@ def extract_image_tags(image_name):
     
     
 # Mention the installed location of Tesseract-OCR in your system 
-pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'      
+pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
+      
 # Read image from which text needs to be extracted 
-img_name= "internet.jpg" 
+img_name= "zero_one.jpg" 
 t=extract_image_tags(img_name)
 print(t)
