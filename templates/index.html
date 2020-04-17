@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script src="{{ url_for('static', filename='BM25.js') }}"></script>
+
 
   </head>
   <body>
@@ -26,13 +26,33 @@
         <input id="buttonInput" type="submit" value="Send">
       </div>
       <script>
+        // function getBotResponse() {
+        //   var rawText = $("#textInput").val();
+        //   var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+        //   msg = bm25_model.find_ans(userHtml); ////////////////
+        //   $("#textInput").val("");
+        //   $("#chatbox").append(userHtml);  ///////////////////
+        //   $("#chatbox").append(msg);
+        //   document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+        //   $.get("/get", { msg: rawText }).done(function(data) {
+        //     var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+        //     $("#chatbox").append(botHtml);
+        //     document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+        //   });
+        // }
+        // $("#textInput").keypress(function(e) {
+        //     if(e.which == 13) {
+        //         getBotResponse();
+        //     }
+        // });
+        // $("#buttonInput").click(function() {
+        //   getBotResponse();
+        // })
         function getBotResponse() {
           var rawText = $("#textInput").val();
           var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-          msg = bm25_model.find_ans(userHtml); ////////////////
           $("#textInput").val("");
-          $("#chatbox").append(userHtml);  ///////////////////
-          $("#chatbox").append(msg);
+          $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           $.get("/get", { msg: rawText }).done(function(data) {
             var botHtml = '<p class="botText"><span>' + data + '</span></p>';
