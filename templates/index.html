@@ -59,9 +59,11 @@
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
             if(data.Answer != 'not found'){
-            var imagehtml='<p class="botimage"><span>' + '<img src="" width="500" height="500" id="imageBox">' + '</span></p>'
+            rand ='_' + Math.random().toString(36).substr(2, 9);
+            var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"'+data.image_name+'width="500" height="500" id="imageBox">' + '</span></p>'
             $("#chatbox").append(imagehtml);
-            document.getElementById('imageBox').src = "../static/images/text-based/"+data.image_name; 
+            document.getElementById('imageBox').id=rand
+            document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
             }
 
