@@ -65,10 +65,24 @@ h3 {
   font-size: 17px;
   text-align: left;
   line-height: 30px;
+  padding: 10px;
+  border-radius: 2px;
 }
 
 .botText span {
   background-color: #EF5350;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.botimage {
+  text-align: left;
+  line-height: 30px;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.botimage span {
   padding: 10px;
   border-radius: 2px;
 }

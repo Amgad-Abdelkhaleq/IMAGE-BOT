@@ -55,9 +55,16 @@
           $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           $.get("/get", { msg: rawText }).done(function(data) {
-            var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+            var botHtml = '<p class="botText"><span>' + data.Answer + '</span></p>';
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+            if(data.Answer != 'not found'){
+            var imagehtml='<p class="botimage"><span>' + '<img src="" width="500" height="500" id="imageBox">' + '</span></p>'
+            $("#chatbox").append(imagehtml);
+            document.getElementById('imageBox').src = "../static/images/text-based/"+data.image_name; 
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+            }
+
           });
         }
         $("#textInput").keypress(function(e) {
