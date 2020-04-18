@@ -27,7 +27,8 @@ def get_bot_response():
     # data = get.json()
     # # process this JSON data and do something with it
     # print(">>>>>>>>>>>>>flask recieved this:",data) 
-    return  post.text+":::ggg"
+    result=json.loads(post.text)
+    return result["Answer"].replace("\n"," ")
 
 
 if __name__ == "__main__":
