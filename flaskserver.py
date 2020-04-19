@@ -5,6 +5,8 @@ from flask import render_template
 import requests
 import json
 from text_extraction import *
+import os 
+ 
 
 app = Flask(__name__)
 
@@ -23,7 +25,7 @@ def get_bot_response():
     if("extract:" in userText):
         image_str=userText[userText.find(":")+1:]
         print(image_str)
-        path="/home/amgad/Desktop/my-data/image/static/images/text-based/"+image_str
+        path=os.getcwd()+"/static/images/text-based/"+image_str
         image  = cv2.imread(str(path))
         text = extract_text(image)
         print(text)
@@ -46,7 +48,7 @@ def get_bot_response():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=8600)
+   app.run(host='localhost', port=8611)
 
 
 
