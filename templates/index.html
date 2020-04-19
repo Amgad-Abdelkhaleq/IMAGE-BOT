@@ -55,17 +55,26 @@
           $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           $.get("/get", { msg: rawText }).done(function(data) {
+            if(data.type=="extract"){
+            var botHtml = '<p class="botText"><span>' + data.Answer + '</span></p>';
+            $("#chatbox").append(botHtml);
+            }
+            //  else if(data.type=="tag"){}
+  
+            else {
             var botHtml = '<p class="botText"><span>' + data.Answer + '</span></p>';
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
             if(data.Answer != 'not found'){
             rand ='_' + Math.random().toString(36).substr(2, 9);
-            var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"width="500" height="500" id="imageBox">' + '</span></p>'
+            var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"width="500" height="500" id="imageBox">' +'<p>'+data.image_name+'</p>'+ '</span></p>'
             $("#chatbox").append(imagehtml);
             document.getElementById('imageBox').id=rand
             document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-            }
+                      }
+
+            } 
 
           });
         }

@@ -43,9 +43,9 @@ var results = engine.search(query);
  // -> 1 entries found.
 // results[ 0 ][ 0 ] i.e. the top result is:
 try {
-    return {"Answer": docs[ results[ 0 ][ 0 ] ].body,"Number_answers_found":results.length,"image_name": docs[ results[ 0 ][ 0 ] ].image}
+    return {"Answer": docs[ results[ 0 ][ 0 ] ].body,"Number_answers_found":results.length,"image_name": docs[ results[ 0 ][ 0 ] ].image,"type":"QA"}
 } catch (error) {
-    return {"Answer":"not found","image_name":''};
+    return {"Answer":"not found","image_name":'',"type":"QA"};
 }
 
 }  

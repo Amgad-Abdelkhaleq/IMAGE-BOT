@@ -27,23 +27,26 @@ def get_bot_response():
         image  = cv2.imread(str(path))
         text = extract_text(image)
         print(text)
-        result={"Answer":text,"image_name":image_str}
-        result=json.dumps(result)
+        result={"Answer":text,"image_name":image_str,"type":"extract"}
+        #result=json.dumps(result)
+        return result
+
     # elif("tag:" in userText):
     #     #do tag
     #     pass
+    #result={"Answer":text,"image_name":image_str,"type":"tag"}
     else:
        newdata = {"question": userText} # this is the new data you're going to send to the Node server
        # now immediately sending a post request with new data
        post = requests.post('http://localhost:5000/postdata', json=newdata) # the POST request
        print(">>>>>>>>>flask recived this :",post.text)
        result=json.loads(post.text)
-
-    return result
+       return result
+       
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=8800)
+   app.run(host='localhost', port=8100)
 
 
 
