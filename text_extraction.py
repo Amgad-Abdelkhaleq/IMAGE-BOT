@@ -57,7 +57,8 @@ def extract_text(image):
     gray = get_grayscale(image)
     thresh = thresholding(gray)
     #op = opening(gray)
-    text = pytesseract.image_to_string(thresh, config='')    
+    text=''
+    text += str(pytesseract.image_to_string(thresh, config=''))
     return text
     
 # Read image

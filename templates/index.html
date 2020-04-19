@@ -19,35 +19,13 @@
     <h1>image bot</h1>
     <div>
       <div id="chatbox">
-        <p class="botText"><span>Hi!.</span></p>
+        <p class="botText">Hi!</p>
       </div>
       <div id="userInput">
         <input id="textInput" type="text" name="msg" placeholder="Message">
         <input id="buttonInput" type="submit" value="Send">
       </div>
       <script>
-        // function getBotResponse() {
-        //   var rawText = $("#textInput").val();
-        //   var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-        //   msg = bm25_model.find_ans(userHtml); ////////////////
-        //   $("#textInput").val("");
-        //   $("#chatbox").append(userHtml);  ///////////////////
-        //   $("#chatbox").append(msg);
-        //   document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-        //   $.get("/get", { msg: rawText }).done(function(data) {
-        //     var botHtml = '<p class="botText"><span>' + data + '</span></p>';
-        //     $("#chatbox").append(botHtml);
-        //     document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-        //   });
-        // }
-        // $("#textInput").keypress(function(e) {
-        //     if(e.which == 13) {
-        //         getBotResponse();
-        //     }
-        // });
-        // $("#buttonInput").click(function() {
-        //   getBotResponse();
-        // })
         function getBotResponse() {
           var rawText = $("#textInput").val();
           var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
@@ -56,13 +34,13 @@
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           $.get("/get", { msg: rawText }).done(function(data) {
             if(data.type=="extract"){
-            var botHtml = '<p class="botText"><span>' + data.Answer + '</span></p>';
+            var botHtml = '<p class="botText">' + data.Answer + '</p>';
             $("#chatbox").append(botHtml);
             }
             //  else if(data.type=="tag"){}
   
             else {
-            var botHtml = '<p class="botText"><span>' + data.Answer + '</span></p>';
+            var botHtml = '<p class="botText">' + data.Answer + '</p>';
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
             if(data.Answer != 'not found'){

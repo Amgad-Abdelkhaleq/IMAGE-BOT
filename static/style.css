@@ -22,6 +22,7 @@ h3 {
   margin-right: auto;
   width: 40%;
   margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 #userInput {
@@ -67,13 +68,14 @@ h3 {
   line-height: 30px;
   padding: 10px;
   border-radius: 2px;
+  background-color:  #EF5350;
 }
 
-.botText span {
+/* .botText span {
   background-color: #EF5350;
   padding: 10px;
   border-radius: 2px;
-}
+} */
 
 .botimage {
   text-align: left;
