@@ -22,9 +22,13 @@ def get_bot_response():
     userText = request.args.get('msg')
     if("extract:" in userText):
         image_str=userText[userText.find(":")+1:]
-        image  = cv2.imread(image_str)
+        print(image_str)
+        path="/home/amgad/Desktop/my-data/image/static/images/text-based/"+image_str
+        image  = cv2.imread(str(path))
         text = extract_text(image)
-        result=text
+        print(text)
+        result={"Answer":text,"image_name":image_str}
+        result=json.dumps(result)
     # elif("tag:" in userText):
     #     #do tag
     #     pass

@@ -1,4 +1,4 @@
-import cv2
+from cv2 import cv2 
 import numpy as np
 #import matplotlib.pyplot as plt
 #import matplotlib.image as mpimg
@@ -56,13 +56,13 @@ def match_template(image, template):
 def extract_text(image):
     gray = get_grayscale(image)
     thresh = thresholding(gray)
-    op = opening(gray)
-    text = pytesseract.image_to_string(op, config='')    
+    #op = opening(gray)
+    text = pytesseract.image_to_string(thresh, config='')    
     return text
     
 # Read image
 # image  = cv2.imread('text.JPG')
 # text=extract_text(image)
 # print(text)
-pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
+#pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
 
