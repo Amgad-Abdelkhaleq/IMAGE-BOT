@@ -40,15 +40,19 @@ def get_bot_response():
     else:
        newdata = {"question": userText} # this is the new data you're going to send to the Node server
        # now immediately sending a post request with new data
-       post = requests.post('http://localhost:5000/postdata', json=newdata) # the POST request
-       print(">>>>>>>>>flask recived this :",post.text)
-       result=json.loads(post.text)
-       return result
+       try:
+         post = requests.post('http://localhost:3000/postdata', json=newdata) # the POST request      
+         print(">>>>>>>>>flask recived this :",post.text)
+         result=json.loads(post.text) 
+         return result
+       except:
+           print("i failed connecting node")
+      
        
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=8322)
+   app.run(host='localhost', port=9860)
 
 
 

@@ -14,15 +14,15 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
+<link rel="icon" href="data:,">
 
   </head>
   <body>
     <!-- <h1>image bot</h1> -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top"id="mynav">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mynav">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">IMAGE BOT</a>
+          <h1 >IMAGE BOT</h1>
         </div>
       </div>
     </nav>
@@ -31,7 +31,7 @@
         <p class="botText">Hi!</p>
       </div>
       <div id="userInput">
-        <input id="textInput" type="text" name="msg" placeholder="Message">
+        <input id="textInput" class="w3-input w3-border w3-round-large" type="text" name="msg" placeholder="Message">
         <input id="buttonInput" type="submit" value="Send">
       </div>
       <script>
@@ -54,7 +54,7 @@
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
             if(data.Answer != 'not found'){
             rand ='_' + Math.random().toString(36).substr(2, 9);
-            var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"width="500" height="500" id="imageBox">' +'<p>'+data.image_name+'</p>'+ '</span></p>'
+            var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"width="500" height="500" id="imageBox">' +'<p class="image-title">'+data.image_name+'</p>'+ '</span></p>'
             $("#chatbox").append(imagehtml);
             document.getElementById('imageBox').id=rand
             document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 

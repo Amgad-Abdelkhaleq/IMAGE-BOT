@@ -26,6 +26,6 @@ app.post("/postdata", (req, res) => {
 
 
 
-port=5000
+port=3000
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 
