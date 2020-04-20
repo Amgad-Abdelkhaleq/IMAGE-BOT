@@ -6,9 +6,11 @@ import requests
 import json
 from text_extraction import *
 import os 
- 
 
+ 
+    
 app = Flask(__name__)
+
 
 #KB_json=json.dumps(KB)
 # @app.route('/')
@@ -16,11 +18,19 @@ print("inside post")
 # def hello_world():
 #     return render_template('index.html')
 
+
+
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route("/chat",methods=['GET', 'POST'])
+@app.route("/chat",methods=['GET'])
 def get_bot_response():
         userText = request.args.get('msg')
         if("extract:" in userText):
@@ -50,11 +60,12 @@ def get_bot_response():
                 print("i failed connecting node")
 
       
-       
+    
 
-@app.route("/upload",methods=['GET', 'POST'])
+@app.route("/upload",methods=['POST'])
 def uploader():
     if request.method == 'POST':
+        print(request.files)
         print("inside post")
         UPLOAD_FOLDER =os.path.join(os.getcwd(),"static/images/text-based")
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -63,6 +74,7 @@ def uploader():
         uploaded_files =  request.files.getlist("files")
         print("before for")
         print(uploaded_files)
+        #if(len(uploaded_files)==0): raise("files list is empty")
         for file in uploaded_files:
             if file and allowed_file(file.filename):
                 print("allowed is okay")
@@ -87,7 +99,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=8789)
+   app.run(host='localhost', port=8600,debug=True)
 
 
 
