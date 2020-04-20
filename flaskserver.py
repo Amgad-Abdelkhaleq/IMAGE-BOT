@@ -8,7 +8,7 @@ from text_extraction import *
 import os 
 
  
-    
+
 app = Flask(__name__)
 
 
@@ -99,7 +99,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=8600,debug=True)
+   app.run(host='localhost', port=8900,debug=True)
 
 
 
