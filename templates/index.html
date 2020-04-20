@@ -23,7 +23,9 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <h1 >IMAGE BOT</h1>
-        </div>  
+        </div>
+        <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Upload Images</button>  
       </div>
     </nav>
     <div>
@@ -33,7 +35,7 @@
       <div id="userInput">
         <input id="textInput" class="w3-input w3-border w3-round-large" type="text" name="msg" placeholder="Message">
         <input id="buttonInput" type="submit" value="Send">
-        <input type="file" name="file[]" id="#uploadInput"  multiple>
+        <!-- <input type="file" name="file[]" id="#uploadInput"  multiple> -->
       </div>
     
       <script>
@@ -44,25 +46,38 @@
           $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           if(rawText=="upload"){
-               $('#uploadInput').focus().trigger('click');
-                var formdata = new FormData(); //FormData object
-                var fileInput = document.getElementById('#uploadInput');
-                //Iterating through each files selected in fileInput
-                for (i = 0; i < fileInput.files.length; i++) {
-                    //Appending each file to FormData object
-                    formdata.append(fileInput.files[i].name, fileInput.files[i]);
-                }
-                //Creating an XMLHttpRequest and sending
-                var xhr = new XMLHttpRequest();
+              //  $('#uploadInput').focus().trigger('click');
+                              
+                //               var uploadForm = document.createElement('form');
+                //               var fileInput = uploadForm.appendChild(document.createElement('input'));
+                //               fileInput.type = 'file';
+                //               fileInput.name = 'file[]';
+                //               fileInput.multiple = true;
+                //               fileInput.id="uploadInput"
+                //               fileInput.click();
+                //               //$("#uploadInput").remove();
+                          
 
-                var url = encodeURI('/chat');
-                xhr.open('POST', url,true);
-                xhr.send(formdata); 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        alert(xhr.responseText);
-                    }
-                }
+                // var formdata = new FormData(); //FormData object
+                // var fileInput = document.getElementById('#uploadInput');
+                // //Iterating through each files selected in fileInput
+                // for (i = 0; i < fileInput.files.length; i++) {
+                //     //Appending each file to FormData object
+                //     formdata.append(fileInput.files[i].name, fileInput.files[i]);
+                // }
+                // //Creating an XMLHttpRequest and sending
+                // var xhr = new XMLHttpRequest();
+
+                // var url = encodeURI('http://localhost:8772/chat');
+                // xhr.open('POST', url,true);
+                // xhr.send(formdata); 
+                
+                // xhr.onreadystatechange = function () {
+                //     if (xhr.readyState == 4 && xhr.status == 200) {
+                //         alert(xhr.responseText);
+                //     }
+                // }
+                // $("#uploadInput").remove();
 
           } else{
               $.get("/chat", { msg: rawText }).done(function(data) {
@@ -100,5 +115,54 @@
         })
       </script>
     </div>
+
+   
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">IMAGE BOT</h4>
+        </div>
+        <div class="modal-body">
+          
+          
+          
+          
+      <div class="container">
+  <h2>Upload Images</h2>
+  <form action="/upload"  method = "POST" >
+    <div class="form-group">
+      <input type="file" name="files" multiple/>
+    </div>
+    <button type="submit" class="btn btn-default" style="background-color:black"><span style="color:white">Submit</span></button>
+  </form>
+</div>
+
+          
+          
+          
+          
+          
+          
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+
+
   </body>
 </html>

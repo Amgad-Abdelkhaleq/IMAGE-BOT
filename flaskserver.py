@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 #KB_json=json.dumps(KB)
 # @app.route('/')
+print("inside post")
 # def hello_world():
 #     return render_template('index.html')
 
@@ -19,32 +20,8 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.route("/chat",methods=['POST','GET'])
+@app.route("/chat",methods=['GET', 'POST'])
 def get_bot_response():
-    if request.method == "POST":
-        UPLOAD_FOLDER =os.path.join(os.getcwd(),"static/images/text-based")
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
-        # Get the name of the uploaded files
-        uploaded_files = request.files.getlist("file[]")
-        for file in uploaded_files:
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                image = cv2.imread(UPLOAD_FOLDER+"/"+file.filename)
-                text=extract_text(image)
-                data_dict= {"image":filename ,"body":text}
-                fname =  os.path.join(os.getcwd(),"static\KB\output.json")
-                if os.path.isfile(fname):
-                    # File exists
-                    with open(fname, 'a+') as outfile:
-                        outfile.seek(-1, os.SEEK_END)
-                        outfile.truncate()
-                        outfile.write(',')
-                        json.dump(data_dict, outfile)
-                        outfile.write(']')
-
-    elif request.method == "GET":
         userText = request.args.get('msg')
         if("extract:" in userText):
             image_str=userText[userText.find(":")+1:]
@@ -71,12 +48,47 @@ def get_bot_response():
                 return result
             except:
                 print("i failed connecting node")
+
       
        
 
+@app.route("/upload",methods=['GET', 'POST'])
+def uploader():
+    if request.method == 'POST':
+        print("inside post")
+        UPLOAD_FOLDER =os.path.join(os.getcwd(),"static/images/text-based")
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+        app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
+        # Get the name of the uploaded files
+        uploaded_files =  request.files.getlist("files")
+        print("before for")
+        print(uploaded_files)
+        for file in uploaded_files:
+            if file and allowed_file(file.filename):
+                print("allowed is okay")
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                image = cv2.imread(UPLOAD_FOLDER+"/"+file.filename)
+                text=extract_text(image)
+                data_dict= {"image":filename ,"body":text}
+                print(data_dict)
+                fname =  os.path.join(os.getcwd(),"static\KB\output.json")
+                if os.path.isfile(fname):
+                    # File exists
+                    print("file exists")
+                    with open(fname, 'a+') as outfile:
+                        outfile.seek(-1, os.SEEK_END)
+                        outfile.truncate()
+                        outfile.write(',')
+                        json.dump(data_dict, outfile)
+                        outfile.write(']')
+                        print("kb updated")
+    return render_template("index.html")
+
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=8763)
+   app.run(host='localhost', port=8789)
+
 
 
 
