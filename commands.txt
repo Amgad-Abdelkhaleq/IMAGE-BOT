@@ -1,5 +1,0 @@
-pip3 install -U numpy
-pip3 install pytesseract
-pip3 install opencv-python
-pip3 install requests
-pip3 install flask
