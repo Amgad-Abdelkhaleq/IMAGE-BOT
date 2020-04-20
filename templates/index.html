@@ -23,7 +23,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <h1 >IMAGE BOT</h1>
-        </div>
+        </div>  
       </div>
     </nav>
     <div>
@@ -33,7 +33,9 @@
       <div id="userInput">
         <input id="textInput" class="w3-input w3-border w3-round-large" type="text" name="msg" placeholder="Message">
         <input id="buttonInput" type="submit" value="Send">
+        <input type="file" name="file[]" id="#uploadInput"  multiple>
       </div>
+    
       <script>
         function getBotResponse() {
           var rawText = $("#textInput").val();
@@ -41,29 +43,52 @@
           $("#textInput").val("");
           $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-          $.get("/get", { msg: rawText }).done(function(data) {
-            if(data.type=="extract"){
-            var botHtml = '<p class="botText">' + data.Answer + '</p>';
-            $("#chatbox").append(botHtml);
-            }
-            //  else if(data.type=="tag"){}
-  
-            else {
-            var botHtml = '<p class="botText">' + data.Answer + '</p>';
-            $("#chatbox").append(botHtml);
-            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-            if(data.Answer != 'not found'){
-            rand ='_' + Math.random().toString(36).substr(2, 9);
-            var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"width="500" height="500" id="imageBox">' +'<p class="image-title">'+data.image_name+'</p>'+ '</span></p>'
-            $("#chatbox").append(imagehtml);
-            document.getElementById('imageBox').id=rand
-            document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
-            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-                      }
+          if(rawText=="upload"){
+               $('#uploadInput').focus().trigger('click');
+                var formdata = new FormData(); //FormData object
+                var fileInput = document.getElementById('#uploadInput');
+                //Iterating through each files selected in fileInput
+                for (i = 0; i < fileInput.files.length; i++) {
+                    //Appending each file to FormData object
+                    formdata.append(fileInput.files[i].name, fileInput.files[i]);
+                }
+                //Creating an XMLHttpRequest and sending
+                var xhr = new XMLHttpRequest();
 
-            } 
+                var url = encodeURI('/chat');
+                xhr.open('POST', url,true);
+                xhr.send(formdata); 
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert(xhr.responseText);
+                    }
+                }
 
-          });
+          } else{
+              $.get("/chat", { msg: rawText }).done(function(data) {
+                if(data.type=="extract"){
+                var botHtml = '<p class="botText">' + data.Answer + '</p>';
+                $("#chatbox").append(botHtml);
+                }
+                //  else if(data.type=="tag"){}
+      
+                else {
+                var botHtml = '<p class="botText">' + data.Answer + '</p>';
+                $("#chatbox").append(botHtml);
+                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                if(data.Answer != 'not found'){
+                rand ='_' + Math.random().toString(36).substr(2, 9);
+                var imagehtml='<p class="botimage"><span>' + '<img src="../static/images/text-based/"width="500" height="500" id="imageBox">' +'<p class="image-title">'+data.image_name+'</p>'+ '</span></p>'
+                $("#chatbox").append(imagehtml);
+                document.getElementById('imageBox').id=rand
+                document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
+                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                          }
+
+                } 
+
+              });
+           }
         }
         $("#textInput").keypress(function(e) {
             if(e.which == 13) {
