@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
  
 app.post("/postdata", (req, res) => {
     var question = req.body.question;
-    var  KB = req.body.KB;
+    //var  KB = req.body.KB;
     console.log("express recieved:  "+question);
     res.send(bm25_model.find_ans(question));
 });

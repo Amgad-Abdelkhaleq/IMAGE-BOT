@@ -6,6 +6,7 @@ var engine = bm25();
 // Load NLP utilities
 var nlp = require( 'wink-nlp-utils' );
 var docs = require( '../static/KB/output.json');
+console.log(docs)
 // Define preparatory task pipe!
 var pipe = [
   nlp.string.lowerCase,
