@@ -111,8 +111,8 @@
                 var imagehtml='<p class="botimage"><span>' + '<img src="" width="500" height="500" id="imageBox">' +'<p class="image-title">'+data.image_name+'</p>'+ '</span></p>'
                 $("#chatbox").append(imagehtml);
                 document.getElementById('imageBox').id=rand
-                document.getElementById(rand).src = "../static/images/text-based/"+data.image_name;
-                document.getElementById(rand).alt= data.image_name; 
+                document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
+                document.getElementById(rand).alt= data.image_name;
                 document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
                           }
 
@@ -211,19 +211,6 @@
 </div>
 
 
-
-<!-- image Modal -->
-<div id="myModal" class="modal">
-
-  <!-- The Close Button -->
-  <span class="close">&times;</span>
-
-  <!-- Modal Content (The Image) -->
-  <img class="modal-content" id="img01">
-
-  <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
-</div>
 
 
   </body>
