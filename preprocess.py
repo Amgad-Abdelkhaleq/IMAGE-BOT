@@ -2,6 +2,7 @@ import re
 import os
 from text_extraction import *
 import pprint as pp
+import json 
 
 
 def split_page(text,min_length=200):
@@ -40,32 +41,30 @@ def split_page(text,min_length=200):
 
 
 
+def create_KB():
+    paragraphs=[]
+    p_threshold=150
+    fname = os.path.join(os.getcwd(),"static/KB/output.json")                        
+    KB = json.load(open(fname,'r')) # load the current data
+    folder=os.path.join(os.getcwd(),"static/images/text-based")
+    for filename in os.listdir(folder):
+        img = cv2.imread(os.path.join(folder,filename))
+        page = extract_text(img)
+        if (len(page) > p_threshold) :
+        # dic={"image":filename , "page":page}
+            paragraphs= split_page(page)
+            for p in paragraphs: 
+                if len(p)> p_threshold :
+                        data_dict= {"image":filename ,"body":p}
+                        print(data_dict,"\n")
+                        KB.append(data_dict) # append the dictionary to the list
+    # then we dump it to the file.
+    json.dump(KB, open(fname, 'w'))
 
-paragraphs=[]
-page_threshold=200
-folder=os.path.join(os.getcwd(),"static/images/text-based")
-for filename in os.listdir(folder):
-    img = cv2.imread(os.path.join(folder,filename))
-    page = extract_text(img)
-    if (len(page) > page_threshold) :
-       # dic={"image":filename , "page":page}
-        paragraphs= split_page(page)
-        for p in paragraphs:    
-                data_dict= {"image":filename ,"body":p}
-                print(data_dict,"\n")
-                fname =  os.path.join(os.getcwd(),"static\KB\output.json")
-                if os.path.isfile(fname):
-                    # File exists
-                    print("file exists")
-                    with open(fname, 'a+') as outfile:
-                        outfile.seek(-1, os.SEEK_END)
-                        outfile.truncate()
-                        outfile.write(',')
-                        json.dump(data_dict, outfile)
-                        outfile.write(']')
-                        print("kb updated")
 
+
+
+create_KB()
 
     
 
-# pp.pprint(list_par)
