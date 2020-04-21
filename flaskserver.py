@@ -49,6 +49,7 @@ def get_bot_response():
         #     pass
         #result={"Answer":text,"image_name":image_str,"type":"tag"}
         else:
+            print("flask will send this:",userText)
             newdata = {"question": userText} # this is the new data you're going to send to the Node server
             # now immediately sending a post request with new data
             try:
@@ -75,31 +76,31 @@ def uploader():
         print("before for")
         print(uploaded_files)
         #if(len(uploaded_files)==0): raise("files list is empty")
-        for file in uploaded_files:
-            if file and allowed_file(file.filename):
-                print("allowed is okay")
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                image = cv2.imread(UPLOAD_FOLDER+"/"+file.filename)
-                text=extract_text(image)
-                data_dict= {"image":filename ,"body":text}
-                print(data_dict)
-                fname =  os.path.join(os.getcwd(),"static\KB\output.json")
-                if os.path.isfile(fname):
-                    # File exists
-                    print("file exists")
-                    with open(fname, 'a+') as outfile:
-                        outfile.seek(-1, os.SEEK_END)
-                        outfile.truncate()
-                        outfile.write(',')
-                        json.dump(data_dict, outfile)
-                        outfile.write(']')
-                        print("kb updated")
-    return render_template("index.html")
+    #     for file in uploaded_files:
+    #         if file and allowed_file(file.filename):
+    #             print("allowed is okay")
+    #             filename = secure_filename(file.filename)
+    #             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    #             image = cv2.imread(UPLOAD_FOLDER+"/"+file.filename)
+    #             text=extract_text(image)
+    #             data_dict= {"image":filename ,"body":text}
+    #             print(data_dict)
+    #             fname =  os.path.join(os.getcwd(),"static\KB\output.json")
+    #             if os.path.isfile(fname):
+    #                 # File exists
+    #                 print("file exists")
+    #                 with open(fname, 'a+') as outfile:
+    #                     outfile.seek(-1, os.SEEK_END)
+    #                     outfile.truncate()
+    #                     outfile.write(',')
+    #                     json.dump(data_dict, outfile)
+    #                     outfile.write(']')
+    #                     print("kb updated")
+    # return render_template("index.html")
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9819,debug=True)
+   app.run(host='localhost', port=9699,debug=True)
 
 
 

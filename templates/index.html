@@ -21,11 +21,11 @@
     <!-- <h1>image bot</h1> -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mynav" style="margin-top: 20px;">
       <div class="container-fluid">
-        <div class="navbar-header"><h1 class="navbar-brand" style="font-weight: 1000; color: aliceblue; font-family:cursive; font-size: 30px;">IMAGE BOT</h1></div>
+        <div class="navbar-header"><h1 class="navbar-brand" style="font-weight: 600; color:whitesmoke; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">ImageBot</h1></div>
         <ul class="nav navbar-nav">
           <li class="active">     
              <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style=" margin-top: 30px; padding-left:20px; padding-right:20px;">Upload Images</button>  
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-top: 30px; padding-left:20px; padding-right:20px; width:100px;"> UPLOAD </button>  
           </li>
         </ul>
         </div>
@@ -108,7 +108,14 @@
                 document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
                 if(data.Answer != 'not found'){
                 rand ='_' + Math.random().toString(36).substr(2, 9);
-                var imagehtml='<p class="botimage"><span>' + '<img src="" width="500" height="500" id="imageBox">' +'<p class="image-title">'+data.image_name+'</p>'+ '</span></p>'
+                // var imagehtml='<p class="botimage"><span>'
+                //    + '<img src="" width="500" height="500" id="imageBox">' 
+                //    +'<p class="image-title">'+data.image_name+'</p>'
+                //    + '</span></p>'
+                var imagehtml= '<figure class="botimage">'
+                  +'<img src="" width="500" height="500" id="imageBox">'
+                  +'<figcaption class="image-title">'+data.image_name+'</figcaption>'
+                  +'</figure>'              
                 $("#chatbox").append(imagehtml);
                 document.getElementById('imageBox').id=rand
                 document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
@@ -188,7 +195,7 @@
     <div class="form-group">
       <input type="file" name="files" id="File" multiple/>
     </div>
-    <button type="submit" class="btn btn-default" style="background-color:black" ><span style="color:white">Submit</span></button>
+    <button type="submit" class="btn btn-primary" >Submit</button>
   </form>
 </div>
 
