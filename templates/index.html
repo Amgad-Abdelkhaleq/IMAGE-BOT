@@ -112,15 +112,22 @@
                 //    + '<img src="" width="500" height="500" id="imageBox">' 
                 //    +'<p class="image-title">'+data.image_name+'</p>'
                 //    + '</span></p>'
-                var imagehtml= '<figure class="botimage">'
-                  +'<img src="" width="500" height="500" id="imageBox">'
-                  +'<figcaption class="image-title">'+data.image_name+'</figcaption>'
-                  +'</figure>'              
+                var imagehtml= 
+               '<div class="thumb" href="#">'
+                  +'<img src="" alt="" id="imageBox">'
+                  +'<div class="caption">'+"&nbsp;"+data.image_name +'</div>'
+                  +'</div>'
+                // '<figure class="botimage">'
+                //   +'<img src="" width="500" height="500" id="imageBox">'
+                //   +'<figcaption class="image-title">'+data.image_name+'</figcaption>'
+                //   +'</figure>'              
                 $("#chatbox").append(imagehtml);
                 document.getElementById('imageBox').id=rand
                 document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
                 document.getElementById(rand).alt= data.image_name;
                 document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+
+
                           }
 
                 } 
