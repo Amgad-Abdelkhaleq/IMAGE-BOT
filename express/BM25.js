@@ -5,8 +5,8 @@ var bm25 = require( './wink-bm25-text-search' );
 var engine = bm25();
 // Load NLP utilities
 var nlp = require( 'wink-nlp-utils' );
-// Load sample data (load any other JSON data instead of sample)
-var docs = require( './KB/output.json');
+var docs = require( '../static/KB/output.json');
+console.log(docs)
 // Define preparatory task pipe!
 var pipe = [
   nlp.string.lowerCase,
@@ -20,7 +20,7 @@ var query;
 
 // Step I: Define config
 // Only field weights are required in this example.
-engine.defineConfig( { fldWeights: { title: 1, body: 1 ,tags:1 } } );
+engine.defineConfig( { fldWeights: { body: 1 } } );
 // Step II: Define PrepTasks pipe.
 // Set up 'default' preparatory tasks i.e. for everything else
 engine.definePrepTasks( pipe );
@@ -35,17 +35,18 @@ docs.forEach( function ( doc, i ) {
 // Step IV: Consolidate
 // Consolidate before searching
 engine.consolidate();
+
 module.exports={
-find_ans: function get_answer(query){
+find_ans: function get_answer(query){ // Load sample data (load any other JSON data instead of sample)
 // All set, start searching!
 // `results` is an array of [ doc-id, score ], sorted by 
 var results = engine.search(query);
  // -> 1 entries found.
 // results[ 0 ][ 0 ] i.e. the top result is:
 try {
-    return query+"<p>"+docs[ results[ 0 ][ 0 ] ].body+"<p>"+'Number answers found:'+results.length+"<p>";
+    return {"Answer": docs[ results[ 0 ][ 0 ] ].body,"Number_answers_found":results.length,"image_name": docs[ results[ 0 ][ 0 ] ].image,"type":"QA"}
 } catch (error) {
-    return "not found";
+    return {"Answer":"not found","image_name":'',"type":"QA"};
 }
 
 }  

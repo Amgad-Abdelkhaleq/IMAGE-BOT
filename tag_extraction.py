@@ -1,4 +1,4 @@
-import cv2 
+from cv2 import cv2 
 import pytesseract 
 
 def extract_image_tags(image_name):

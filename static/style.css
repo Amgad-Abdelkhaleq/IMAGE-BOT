@@ -1,13 +1,22 @@
+/* html {
+  background: url('./images/photo/blur.jpg')  no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+} */
+
 body {
   font-family: Garamond;
+  /* background-color: black; */
+  /* height: 100vh; */
+  background: url('./images/photo/blur.jpg')  no-repeat center center fixed;
+  width:100%;
+  height:100%;
+  background-size: 100%;
+background-position-y: bottom;
 }
-
-h1 {
-  color: black;
-  margin-bottom: 0;
-  margin-top: 0;
-  text-align: center;
-  font-size: 40px;
+#mynav{
+  min-height: 56px;
 }
 
 h3 {
@@ -20,30 +29,57 @@ h3 {
 #chatbox {
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  width: 900px;
   margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.image-title{
+  font-size: 30px;
+  font-weight: 300;
+  color: white;
 }
 
 #userInput {
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  width: 900px;
   margin-top: 60px;
+  font-size: 30px;
+  /* height: 100px; */
 }
 
-#textInput {
-  width: 87%;
-  border: none;
+
+#textInput
+ {
+  outline:0;
+  border-width: 0 0 2px;
+  border-color:white; 
+  box-shadow: none;
+  background: transparent;
+  color:white
+}
+
+#textInput:focus {
+  border-color: none;
+  outline:none;
+  box-shadow: none;
+}
+
+/* #textInput {
+   width: 1200px; 
+   border: none;
   border-bottom: 3px solid #009688;
   font-family: monospace;
-  font-size: 17px;
-}
+  font-size: 17px; 
+} */
 
-#buttonInput {
+
+/* #buttonInput {
   padding: 3px;
   font-family: monospace;
   font-size: 17px;
-}
+} */
 
 .userText {
   color: white;
@@ -51,24 +87,41 @@ h3 {
   font-size: 17px;
   text-align: right;
   line-height: 30px;
+  font-weight: 300;
 }
 
 .userText span {
-  background-color: #009688;
+  background-color: #0074D9;
   padding: 10px;
   border-radius: 2px;
 }
 
 .botText {
-  color: white;
+  color:black;
   font-family: monospace;
   font-size: 17px;
   text-align: left;
   line-height: 30px;
+  padding: 10px;
+  border-radius: 2px;
+  background-color:#DDDDDD;
+  font-weight: 300;
 }
 
-.botText span {
+/* .botText span {
   background-color: #EF5350;
+  padding: 10px;
+  border-radius: 2px;
+} */
+
+.botimage {
+  text-align: left;
+  line-height: 30px;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.botimage span {
   padding: 10px;
   border-radius: 2px;
 }
@@ -79,3 +132,18 @@ h3 {
   right:0;
   width: 300px;
 }
+
+/* input[type=submit] {
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  border-radius: 20px;
+  font-weight: 700;
+  background-color:  #0074D9;;
+  text-decoration: none;
+  margin: 4px 2px;
+  
+} */
+
+
