@@ -5,11 +5,17 @@ from flask import render_template
 import requests
 import json
 from text_extraction import *
+
 import os 
 
  
 
 app = Flask(__name__)
+
+
+
+
+
 
 
 #KB_json=json.dumps(KB)
@@ -32,6 +38,10 @@ def home():
 
 @app.route("/chat",methods=['GET'])
 def get_bot_response():
+
+
+
+
         userText = request.args.get('msg')
         if("extract:" in userText):
             image_str=userText[userText.find(":")+1:]
@@ -101,6 +111,29 @@ def uploader():
 
 if __name__ == "__main__":
    app.run(host='localhost', port=9699,debug=True)
+
+
+
+    
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
