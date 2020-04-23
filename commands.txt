@@ -3,3 +3,6 @@ pip3 install pytesseract
 pip3 install opencv-python
 pip3 install requests
 pip3 install flask
+sudo apt update
+sudo apt install tesseract-ocr
+sudo apt install libtesseract-dev
