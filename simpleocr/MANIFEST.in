@@ -1,5 +1,0 @@
-include *.txt
-recursive-include quickocr/localization *
-recursive-include quickocr/recognition *
-recursive-include quickocr/data *
-recursive-exclude quickocr/data *.h5
