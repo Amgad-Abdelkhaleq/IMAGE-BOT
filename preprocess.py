@@ -1,6 +1,6 @@
 import re
 import os
-from text_extraction import *
+from helpers import *
 import pprint as pp
 import json 
 

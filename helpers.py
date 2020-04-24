@@ -1,7 +1,6 @@
-import cv2
+from cv2 import cv2 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import pytesseract
 
 # get grayscale image
@@ -53,17 +52,18 @@ def deskew(image):
 def match_template(image, template):
     return cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED) 
 
-
+def extract_text(image):
+    gray = get_grayscale(image)
+    thresh = thresholding(gray)
+    #op = opening(gray)
+    text=''
+    custom_config = r'-l eng -c tessedit_char_whitelist=" "0123456789abcdefghijklmnopqrstuvwxyz --psm 6'
+    text += str(pytesseract.image_to_string(thresh, config=custom_config))
+    return text
+    
 # Read image
-image  = cv2.imread('text.jpg')
-#image=Image.open('test.jpg')
-pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
-gray = get_grayscale(image)
-thresh = thresholding(gray)
-opening = opening(gray)
-canny = canny(gray)
-plt.imshow(opening)
-plt.figure()
-text = pytesseract.image_to_string(opening, config='')    
-print("text present in images:")
-print(text)
+# image  = cv2.imread('text.JPG')
+# text=extract_text(image)
+# print(text)
+#pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
+

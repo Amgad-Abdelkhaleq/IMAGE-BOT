@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import render_template
 import requests
 import json
-from text_extraction import *
+from helpers import *
 
 import os 
 
