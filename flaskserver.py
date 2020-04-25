@@ -5,28 +5,15 @@ from flask import render_template
 import requests
 import json
 from helpers import *
+from tag_extraction import find_tag
 
 import os 
 
  
 
 app = Flask(__name__)
-
-
-
-
-
-
-
-#KB_json=json.dumps(KB)
-# @app.route('/')
-print("inside post")
-# def hello_world():
-#     return render_template('index.html')
-
-
-
-
+#create tags KB by calling this func or use exist KB in tag_extension.py
+# extract_images_tags()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -38,10 +25,6 @@ def home():
 
 @app.route("/chat",methods=['GET'])
 def get_bot_response():
-
-
-
-
         userText = request.args.get('msg')
         if("extract:" in userText):
             image_str=userText[userText.find(":")+1:]
@@ -54,10 +37,16 @@ def get_bot_response():
             #result=json.dumps(result)
             return result
 
-        # elif("tag:" in userText):
-        #     #do tag
-        #     pass
-        #result={"Answer":text,"image_name":image_str,"type":"tag"}
+        elif("tag:" in userText):
+            tag=userText[userText.find(":")+1:]
+            print("tag entered: ",tag)
+            search_result=find_tag(tag)
+            if search_result== "not found":
+               result={"Answer":"not found","image_name":search_result ,"type":"tag"}
+            else:
+               result={"Answer": "found" ,"image_name":search_result["image"] ,"type":"tag"}  
+            return result   
+        
         else:
             print("flask will send this:",userText)
             newdata = {"question": userText} # this is the new data you're going to send to the Node server
@@ -110,7 +99,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9088,debug=True)
+   app.run(host='localhost', port=9388,debug=True)
 
 
 
