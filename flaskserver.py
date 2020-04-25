@@ -6,18 +6,16 @@ import requests
 import json
 from helpers import *
 from tag_extraction import find_tag
-
 import os 
 
  
 
 app = Flask(__name__)
-#create tags KB by calling this func or use exist KB in tag_extension.py
+#create tags KB by calling this func or use exists KB in tag_extension.py
 # extract_images_tags()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 @app.route("/")
 def home():
