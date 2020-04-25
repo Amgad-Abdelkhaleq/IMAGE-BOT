@@ -64,7 +64,7 @@ def create_KB():
 
 
 
-create_KB()
+# create_KB()
 
     
 

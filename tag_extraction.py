@@ -1,6 +1,4 @@
-from cv2 import cv2 
 import keras_craft
-import pytesseract
 from helpers import *
 import os
 

@@ -6,19 +6,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
-    <!-- <link rel="stylesheet" type="text/css" href='../static/stylesheets/style.css'> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <link rel="icon" href="data:,">
 
   </head>
   <body>
-    <!-- <h1>image bot</h1> -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mynav" style="margin-top: 20px;">
       <div class="container-fluid">
         <div class="navbar-header"><h1 class="navbar-brand" style="font-weight: 600; color:whitesmoke; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 40px;">ImageBot</h1></div>
@@ -32,182 +29,14 @@
     </nav>
     <div>
       <div id="chatbox" class="center">
-        <p class="botText">Hi!<br>I can help you search your images and interact with its content. Type "help" to learn about the features!</p>
+        <p class="botText">Hi!<br>I can help you search your images and interact with its content. Type "help" to learn more about the features!</p>
       </div>
 
       <div id="userInput" class="center input-group" >
         <input id="textInput" class="" type="text" name="msg" placeholder="Message">
-        <!-- <input id="buttonInput" type="submit" value="Send"> -->
-        <!-- <div class="input-group-btn">
-        <button type="submit" id="buttonInput" class="btn btn-primary" style="background-color: #0074D9; "  >Send</button>
-        </div>      -->
-        <!-- <input type="file" name="file[]" id="#uploadInput"  multiple> -->
-      </div>
-
-      <!-- <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div> -->
-    
-      <script>
-        function getBotResponse() {
-          var rawText = $("#textInput").val();
-          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-          $("#textInput").val("");
-          $("#chatbox").append(userHtml);
-          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-        //  if(rawText=="upload"){
-              //  $('#uploadInput').focus().trigger('click');
-                              
-                //               var uploadForm = document.createElement('form');
-                //               var fileInput = uploadForm.appendChild(document.createElement('input'));
-                //               fileInput.type = 'file';
-                //               fileInput.name = 'file[]';
-                //               fileInput.multiple = true;
-                //               fileInput.id="uploadInput"
-                //               fileInput.click();
-                //               //$("#uploadInput").remove();
-                          
-
-                // var formdata = new FormData(); //FormData object
-                // var fileInput = document.getElementById('#uploadInput');
-                // //Iterating through each files selected in fileInput
-                // for (i = 0; i < fileInput.files.length; i++) {
-                //     //Appending each file to FormData object
-                //     formdata.append(fileInput.files[i].name, fileInput.files[i]);
-                // }
-                // //Creating an XMLHttpRequest and sending
-                // var xhr = new XMLHttpRequest();
-
-                // var url = encodeURI('http://localhost:8772/chat');
-                // xhr.open('POST', url,true);
-                // xhr.send(formdata); 
-                
-                // xhr.onreadystatechange = function () {
-                //     if (xhr.readyState == 4 && xhr.status == 200) {
-                //         alert(xhr.responseText);
-                //     }
-                // }
-                // $("#uploadInput").remove();
-
-          // } else{
-              $.get("/chat", { msg: rawText }).done(function(data) {
-                if(data.type=="extract"){
-                var botHtml = '<p class="botText">' + data.Answer + '</p>';
-                $("#chatbox").append(botHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'}); 
-                }
-                
-                else if(data.type=="help"){
-                var botHtml = '<p class="botText">' + data.Answer + '</p>';
-                $("#chatbox").append(botHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'}); 
-                }
-
-
-
-                else if(data.type=="tag"){
-                if(data.Answer == "not found"){
-                    var botHtml = '<p class="botText">' + data.Answer + '</p>';
-                    $("#chatbox").append(botHtml);
-                    document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'}); 
-                }
-                
-                else if(data.Answer == 'found'){
-                rand ='_' + Math.random().toString(36).substr(2, 9);
-                var imagehtml= 
-               '<div class="thumb" href="#">'
-                  +'<img src="" alt="" id="imageBox">'
-                  +'<div class="caption">'+"&nbsp;"+data.image_name +'</div>'
-                  +'</div>'              
-                $("#chatbox").append(imagehtml);
-                document.getElementById('imageBox').id=rand
-                document.getElementById(rand).src = "../static/images/photo/"+data.image_name; 
-                document.getElementById(rand).alt= data.image_name;
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-                   }
-                }
-      
-
-                else {
-                var botHtml = '<p class="botText">' + data.Answer + '</p>';
-                $("#chatbox").append(botHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-                if(data.Answer != 'not found'){
-                rand ='_' + Math.random().toString(36).substr(2, 9);
-                // var imagehtml='<p class="botimage"><span>'
-                //    + '<img src="" width="500" height="500" id="imageBox">' 
-                //    +'<p class="image-title">'+data.image_name+'</p>'
-                //    + '</span></p>'
-                var imagehtml= 
-               '<div class="thumb" href="#">'
-                  +'<img src="" alt="" id="imageBox">'
-                  +'<div class="caption">'+"&nbsp;"+data.image_name +'</div>'
-                  +'</div>'
-                // '<figure class="botimage">'
-                //   +'<img src="" width="500" height="500" id="imageBox">'
-                //   +'<figcaption class="image-title">'+data.image_name+'</figcaption>'
-                //   +'</figure>'              
-                $("#chatbox").append(imagehtml);
-                document.getElementById('imageBox').id=rand
-                document.getElementById(rand).src = "../static/images/text-based/"+data.image_name; 
-                document.getElementById(rand).alt= data.image_name;
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-
-
-                          }
-
-                } 
-
-              });
-           }
-        //}
-
-        // function uploadImage(){
-        // // var form_data = new FormData(); //FormData object
-        //   var fileInput = document.getElementById('#File');
-        //   // if(fileInput.files.length != 0){alert("shit happend")}
-        //   //Iterating through each files selected in fileInput
-        //   // for (i = 0; i < fileInput.files.length; i++) {
-        //   //     //Appending each file to FormData object
-        //   //   form_data.append(fileInput.files[i].name, fileInput.files[i]);
+      </div>    
+      <script src="{{url_for('static', filename='botResponse.js')}}"></script>
         
-        //   // }
-        //   //var form_data = new FormData($('#File')[0]);
-        //     //console.log(form_data)
-        //     var formDataRaw = $('#FileForm')[0];
-        //     var form_data = new FormData(formDataRaw);
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/upload',
-        //         data: form_data,
-        //         contentType: false,
-        //         cache: false,
-        //         processData: false,
-        //         async: false,
-        //         success: function (data) {
-        //             console.log('Success!');
-        //             $("#status").show();
-        //         },
-        //     });
- 
-
-        // }
-
-
-        $("#textInput").keypress(function(e) {
-            if(e.which == 13) {
-                getBotResponse();
-            }
-        });
-        $("#buttonInput").click(function() {
-          getBotResponse();
-        })
-      </script>
     </div>
 
    
