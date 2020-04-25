@@ -52,12 +52,11 @@ def deskew(image):
 def match_template(image, template):
     return cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED) 
 
-def extract_text(image):
+def extract_text(image,custom_config = r'-l eng -c tessedit_char_whitelist=" "0123456789abcdefghijklmnopqrstuvwxyz --psm 6'):
     gray = get_grayscale(image)
     thresh = thresholding(gray)
     #op = opening(gray)
     text=''
-    custom_config = r'-l eng -c tessedit_char_whitelist=" "0123456789abcdefghijklmnopqrstuvwxyz --psm 6'
     text += str(pytesseract.image_to_string(thresh, config=custom_config))
     return text
     

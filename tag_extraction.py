@@ -4,23 +4,37 @@ import pytesseract
 from helpers import *
 import os
 
-def extract_image_tags(image_name):
-    pass
+def extract_images_tags(folder=os.path.join(os.getcwd(),"static/images/photo")):
+    tags_list=[]
+    detector = keras_craft.Detector()
+    for filename in os.listdir(folder):
+        image_path = [os.path.join(folder,filename)]
+        all_boxes,cropped_images = detector.detect(image_path,return_cropped_images=True)
+        for cropped_boxes in cropped_images: 
+            tags=set()
+            for cropped_box in cropped_boxes:
+                # plt.imshow(cropped_box)
+                # plt.figure()
+                tags.add(extract_text(cropped_box,custom_config = r'-l eng -c tessedit_char_whitelist=0123456789abcdefghijklmnopqrstuvwxyz --psm 6').lower())
+            tags_list.append({"image":filename , "tags":tags}) 
+        # # Visualization
+        # for image_path, boxes in zip(image_paths,all_boxes):
+        #   image_with_boxes_path = keras_craft.draw_boxes_on_image(image_path, boxes)
+        #   print(image_with_boxes_path)
+    return tags_list
 
-detector = keras_craft.Detector()
-image_path = [os.path.join(os.getcwd(),"static/images/photo/amr.jpg")]
-all_boxes,cropped_images = detector.detect(image_path,return_cropped_images=True)
+# print(extract_images_tags())
 
-for cropped_boxes in cropped_images: 
-  print(cropped_boxes,"\n",'.............................')
-  for cropped_box in cropped_boxes:
-     #gray = get_grayscale(cropped_box)
-     #thresh = thresholding(gray)    
-     plt.imshow(cropped_box)
-     plt.figure()
-     print('>',extract_text(cropped_box))
+def find_tag(entered_tag):
+    entered_tag=entered_tag.lower()
+    found=False
+    tag_list=extract_images_tags()
+    for dic in tag_list:
+        for tag in dic["tags"]:
+            if entered_tag==tag: 
+                found=True
+                break 
+        if found: return dic 
+    return "not found"    
 
-# # Visualization
-# for image_path, boxes in zip(image_paths,all_boxes):
-#   image_with_boxes_path = keras_craft.draw_boxes_on_image(image_path, boxes)
-#   print(image_with_boxes_path)
+print(find_tag('amr'))
