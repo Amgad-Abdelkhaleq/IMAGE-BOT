@@ -8,7 +8,8 @@ import os
 #tags_list=[] 
 
 #exist KB to test find_tag only 
-tags_list=[{'image': 'amr.jpg', 'tags': {'', 'director', 'mohamed', 'ss', 'co founder/managin', 'in', 'im', 'salama', 'tayarah', 'varg', 'el-a@', 'ismail', 'at'}}, {'image': 'blur.jpg', 'tags': set()}, {'image': 'google.jpg', 'tags': {'gle\nre es ee a'}}, {'image': 'internet.JPG', 'tags': {'', 'things', 'the', 'tof', '(*'}}, {'image': 'menu.jpg', 'tags': {'', 'uta', 'eal'}}]
+tags_list= [{'image': '1.jpg', 'tags': {'', 'mohamed', 'co founder/managin', 'varg', 'ss', 'ismail', 'im', 'director', 'salama', 'at', 'tayarah', 'in', 'el-a@'}}, {'image': '2.jpg', 'tags': {'google'}}, {'image': '3.JPG', 'tags': {'the', '', 'things', '(*', 'tof'}}, {'image': '4.jpg', 'tags': {'', 'uta', 'eal'}}, {'image': '5.JPG', 'tags': {'eb.\noo'}}, {'image': '6.jpg', 'tags': {'ond', 'incorta.', 'ee'}}, {'image': 'blur.jpg', 'tags': set()}]
+
 def extract_images_tags(folder=os.path.join(os.getcwd(),"static/images/photo")):
     global tags_list
     detector = keras_craft.Detector()

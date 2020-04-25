@@ -32,7 +32,7 @@
     </nav>
     <div>
       <div id="chatbox" class="center">
-        <p class="botText">Hi!</p>
+        <p class="botText">Hi!<br>I can help you search your images and interact with its content. Type "help" to learn about the features!</p>
       </div>
 
       <div id="userInput" class="center input-group" >
@@ -99,8 +99,17 @@
                 if(data.type=="extract"){
                 var botHtml = '<p class="botText">' + data.Answer + '</p>';
                 $("#chatbox").append(botHtml);
+                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'}); 
                 }
                 
+                else if(data.type=="help"){
+                var botHtml = '<p class="botText">' + data.Answer + '</p>';
+                $("#chatbox").append(botHtml);
+                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'}); 
+                }
+
+
+
                 else if(data.type=="tag"){
                 if(data.Answer == "not found"){
                     var botHtml = '<p class="botText">' + data.Answer + '</p>';

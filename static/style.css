@@ -6,7 +6,8 @@
 } */
 
 body {
-  font-family: Garamond;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 300;
   /* background-color: black; */
   /* height: 100vh; */
   background: url('./images/photo/blur.jpg')  no-repeat center center fixed;
@@ -124,14 +125,14 @@ h3 {
 
 .botText {
   color:black;
-  font-family: monospace;
-  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
   text-align: left;
   line-height: 30px;
   padding: 10px;
   border-radius: 2px;
   background-color:#DDDDDD;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 /* .botText span {

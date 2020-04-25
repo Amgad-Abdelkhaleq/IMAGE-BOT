@@ -43,7 +43,12 @@ def get_bot_response():
                result={"Answer":"not found","image_name":search_result ,"type":"tag"}
             else:
                result={"Answer": "found" ,"image_name":search_result["image"] ,"type":"tag"}  
-            return result   
+            return result  
+
+        elif(userText=="help"):
+            help_message="you can ask me any question related to text content in your image and I'll help you find the answer and its image, you also can use extract feature by typing 'extract:' followed by image name to extract text content in the image and 'tag:' followed by a keyword to find any natural image with this tag"
+            return {"Answer":help_message ,"type":"help"} 
+
         
         else:
             print("flask will send this:",userText)
@@ -97,7 +102,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9388,debug=True)
+   app.run(host='localhost', port=9788,debug=True)
 
 
 
