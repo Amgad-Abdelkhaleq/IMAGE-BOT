@@ -41,13 +41,13 @@ def split_page(text,min_length=200):
 
 
 
-def create_KB():
+def insert_into_KB(image_names): #input list of images names
     paragraphs=[]
     p_threshold=150
     fname = os.path.join(os.getcwd(),"static/KB/output.json")                        
     KB = json.load(open(fname,'r')) # load the current data
     folder=os.path.join(os.getcwd(),"static/images/text-based")
-    for filename in os.listdir(folder):
+    for filename in image_names:
         img = cv2.imread(os.path.join(folder,filename))
         page = extract_text(img)
         if (len(page) > p_threshold) :

@@ -60,9 +60,7 @@ def extract_text(image,custom_config = r'-l eng -c tessedit_char_whitelist=" "01
     text += str(pytesseract.image_to_string(thresh, config=custom_config))
     return text
     
-# Read image
-# image  = cv2.imread('text.JPG')
-# text=extract_text(image)
-# print(text)
-#pytesseract.pytesseract.tesseract_cmd = r'E:\4TH\2nd-term\Image Processing\project\tess\tesseract.exe'
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 

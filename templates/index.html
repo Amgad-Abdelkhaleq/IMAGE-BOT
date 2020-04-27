@@ -57,7 +57,7 @@
   <h2>Upload Images</h2>
   <form action="/upload"  method = "POST" >
     <div class="form-group">
-      <input type="file" name="files" id="File" multiple/>
+      <input enctype="multipart/form-data"  type="file" name="file[]" id="File" multiple/>
     </div>
     <button type="submit" class="btn btn-primary" >Submit</button>
   </form>

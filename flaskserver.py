@@ -5,6 +5,7 @@ from flask import render_template
 import requests
 import json
 from helpers import *
+from preprocess import *
 from tag_extraction import find_tag
 import os 
 
@@ -13,9 +14,6 @@ import os
 app = Flask(__name__)
 #create tags KB by calling this func or use exists KB in tag_extension.py
 # extract_images_tags()
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/")
 def home():
@@ -32,7 +30,6 @@ def get_bot_response():
             text = extract_text(image)
             print(text)
             result={"Answer":text,"image_name":image_str,"type":"extract"}
-            #result=json.dumps(result)
             return result
 
         elif("tag:" in userText):
@@ -52,7 +49,7 @@ def get_bot_response():
         
         else:
             print("flask will send this:",userText)
-            newdata = {"question": userText} # this is the new data you're going to send to the Node server
+            newdata = {"question": userText} # this is the new data we are going to send to the Node server
             # now immediately sending a post request with new data
             try:
                 post = requests.post('http://localhost:3000/postdata', json=newdata) # the POST request      
@@ -68,41 +65,36 @@ def get_bot_response():
 @app.route("/upload",methods=['POST'])
 def uploader():
     if request.method == 'POST':
-        print(request.files)
+        print(request.files.to_dict())
         print("inside post")
-        UPLOAD_FOLDER =os.path.join(os.getcwd(),"static/images/text-based")
+        UPLOAD_FOLDER =os.path.join(os.getcwd(),"static/images")
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
         app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
         # Get the name of the uploaded files
-        uploaded_files =  request.files.getlist("files")
+        uploaded_files =request.files.getlist("file[]")
         print("before for")
         print(uploaded_files)
-        #if(len(uploaded_files)==0): raise("files list is empty")
-    #     for file in uploaded_files:
-    #         if file and allowed_file(file.filename):
-    #             print("allowed is okay")
-    #             filename = secure_filename(file.filename)
-    #             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    #             image = cv2.imread(UPLOAD_FOLDER+"/"+file.filename)
-    #             text=extract_text(image)
-    #             data_dict= {"image":filename ,"body":text}
-    #             print(data_dict)
-    #             fname =  os.path.join(os.getcwd(),"static\KB\output.json")
-    #             if os.path.isfile(fname):
-    #                 # File exists
-    #                 print("file exists")
-    #                 with open(fname, 'a+') as outfile:
-    #                     outfile.seek(-1, os.SEEK_END)
-    #                     outfile.truncate()
-    #                     outfile.write(',')
-    #                     json.dump(data_dict, outfile)
-    #                     outfile.write(']')
-    #                     print("kb updated")
+        images_names=[]
+
+        for file in uploaded_files:
+            if file and allowed_file(file.filename):
+                print("allowed is okay")
+                filename = secure_filename(file.filename)
+                if(len( extract_text(cv2.imread(file)) )<200): 
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
+
+                else: 
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
+                    images_names.append(filename)
+
+        if(len(images_names)): insert_into_KB(images_names)
+
+
     return render_template("index.html")
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9882,debug=True)
+   app.run(host='localhost', port=9877,debug=True)
 
 
 
