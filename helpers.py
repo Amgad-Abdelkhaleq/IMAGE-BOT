@@ -61,6 +61,5 @@ def extract_text(image,custom_config = r'-l eng -c tessedit_char_whitelist=" "01
     return text
     
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 

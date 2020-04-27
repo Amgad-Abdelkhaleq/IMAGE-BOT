@@ -15,6 +15,11 @@ app = Flask(__name__)
 #create tags KB by calling this func or use exists KB in tag_extension.py
 # extract_images_tags()
 
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(),"static/images")
+app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['UPLOAD_FOLDER']
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -67,24 +72,25 @@ def get_bot_response():
 @app.route("/upload",methods=['POST'])
 def uploader():
     if request.method == 'POST':
-        print(request.files.to_dict())
         print("inside post")
-        UPLOAD_FOLDER =os.path.join(os.getcwd(),"static/images")
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
+        print(request.files.to_dict())
         # Get the name of the uploaded files
         uploaded_files =request.files.getlist("file[]")
-        print("before for")
         print(uploaded_files)
         images_names=[]
 
         for file in uploaded_files:
+            print("inside for")
             if file and allowed_file(file.filename):
                 print("allowed is okay")
-                filename = secure_filename(file.filename)
-                if(len( extract_text(cv2.imread(file)) )<200): 
+                filename = file.filename
+                print("fn:",filename)
+                img= cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+                print("img>>>>>>>>>>>",img)
+                print(">>>",np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+                text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
+                if(len(text)<200): 
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
-
                 else: 
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
                     images_names.append(filename)
@@ -96,7 +102,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9811,debug=True)
+   app.run(host='localhost', port=9808,debug=True)
 
 
 
