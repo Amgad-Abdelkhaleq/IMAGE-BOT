@@ -23,14 +23,16 @@ def home():
 def get_bot_response():
         userText = request.args.get('msg')
         if("extract:" in userText):
-            image_str=userText[userText.find(":")+1:]
-            print(image_str)
-            path=os.getcwd()+"/static/images/text-based/"+image_str
-            image  = cv2.imread(str(path))
-            text = extract_text(image)
-            print(text)
-            result={"Answer":text,"image_name":image_str,"type":"extract"}
-            return result
+            try:    
+                image_str=userText[userText.find(":")+1:]
+                print(image_str)
+                path=os.getcwd()+"/static/images/text-based/"+image_str
+                image  = cv2.imread(str(path))
+                text = extract_text(image)
+                print(text)
+                return {"Answer":text,"image_name":image_str,"type":"extract"}
+            except:
+                return {"Answer":"image not found","type":"error"}    
 
         elif("tag:" in userText):
             tag=userText[userText.find(":")+1:]
@@ -94,7 +96,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9877,debug=True)
+   app.run(host='localhost', port=9811,debug=True)
 
 
 
