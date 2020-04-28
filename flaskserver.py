@@ -18,7 +18,11 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(),"static/images")
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 def allowed_file(filename):
+<<<<<<< HEAD
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']  
+=======
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+>>>>>>> 48a400cf7832a2c92820cc1183a474d86270c106
 
 @app.route("/")
 def home():
@@ -74,7 +78,7 @@ def uploader():
     if request.method == 'POST':
         uploaded_files =request.files.getlist("file[]")
         for file in uploaded_files:
-           if file and allowed_file(file.filename):
+            if file and allowed_file(file.filename):
             print("allowed is okay")
             filename = file.filename
             img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
