@@ -41,30 +41,25 @@ def split_page(text,min_length=200):
 
 
 
-def insert_into_KB(image_names): #input list of images names
+def insert_into_KB(page,filename): #input image text and name 
     paragraphs=[]
     p_threshold=150
     fname = os.path.join(os.getcwd(),"static/KB/output.json")                        
     KB = json.load(open(fname,'r')) # load the current data
-    folder=os.path.join(os.getcwd(),"static/images/text-based")
-    for filename in image_names:
-        img = cv2.imread(os.path.join(folder,filename))
-        page = extract_text(img)
-        if (len(page) > p_threshold) :
-        # dic={"image":filename , "page":page}
-            paragraphs= split_page(page)
-            for p in paragraphs: 
-                if len(p)> p_threshold :
-                        data_dict= {"image":filename ,"body":p}
-                        print(data_dict,"\n")
-                        KB.append(data_dict) # append the dictionary to the list
+    if (len(page) > p_threshold) :
+        paragraphs= split_page(page)
+        for p in paragraphs: 
+            if len(p)> p_threshold :
+                    data_dict= {"image":filename ,"body":p}
+                    print(data_dict,"\n")
+                    KB.append(data_dict) # append the dictionary to the list
     # then we dump it to the file.
     json.dump(KB, open(fname, 'w'))
 
 
 
 
-# create_KB()
+
 
     
 

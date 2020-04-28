@@ -72,37 +72,25 @@ def get_bot_response():
 @app.route("/upload",methods=['POST'])
 def uploader():
     if request.method == 'POST':
-        print("inside post")
-        print(request.files.to_dict())
-        # Get the name of the uploaded files
         uploaded_files =request.files.getlist("file[]")
-        print(uploaded_files)
-        images_names=[]
-
         for file in uploaded_files:
-            print("inside for")
-            if file and allowed_file(file.filename):
-                print("allowed is okay")
-                filename = file.filename
-                print("fn:",filename)
-                img= cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
-                print("img>>>>>>>>>>>",img)
-                print(">>>",np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
-                text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
-                if(len(text)<200): 
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
-                else: 
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
-                    images_names.append(filename)
-
-        if(len(images_names)): insert_into_KB(images_names)
-
+           # if file and allowed_file(file.filename):
+            #print("allowed is okay")
+            filename = file.filename
+            img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+            text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
+            print(len(text))
+            if(len(text)<200): 
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
+            else: 
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
+                insert_into_KB(page=text,filename=file.filename)         
 
     return render_template("index.html")
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9808,debug=True)
+   app.run(host='localhost', port=9830,debug=True)
 
 
 

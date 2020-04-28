@@ -6,3 +6,4 @@ pip3 install flask
 sudo apt update
 sudo apt install tesseract-ocr
 sudo apt install libtesseract-dev
+pip install git+https://github.com/notAI-tech/keras-craft 
