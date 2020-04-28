@@ -6,6 +6,8 @@ chatbot for interaction with the text content of images like QA, text detecting 
 
 
 ### Question Answering
+![Screenshot (50)](https://user-images.githubusercontent.com/36202618/80548169-89f9e700-89ba-11ea-9247-848fa72a2491.png)
+
 
 
 
