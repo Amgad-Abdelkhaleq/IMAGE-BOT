@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(),"static/images")
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['UPLOAD_FOLDER']
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']  
 
 @app.route("/")
 def home():
@@ -74,23 +74,24 @@ def uploader():
     if request.method == 'POST':
         uploaded_files =request.files.getlist("file[]")
         for file in uploaded_files:
-           # if file and allowed_file(file.filename):
-            #print("allowed is okay")
+           if file and allowed_file(file.filename):
+            print("allowed is okay")
             filename = file.filename
             img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
             text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
-            print(len(text))
+            page= extract_text(img)
+            print(len(text),"p:",len(page))
             if(len(text)<200): 
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
             else: 
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
-                insert_into_KB(page=text,filename=file.filename)         
+                insert_into_KB(page=page,filename=file.filename)         
 
     return render_template("index.html")
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=9830,debug=True)
+   app.run(host='localhost', port=5000,debug=True)
 
 
 
