@@ -18,11 +18,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(),"static/images")
 app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
 def allowed_file(filename):
-<<<<<<< HEAD
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']  
-=======
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
->>>>>>> 48a400cf7832a2c92820cc1183a474d86270c106
 
 @app.route("/")
 def home():
@@ -79,17 +75,17 @@ def uploader():
         uploaded_files =request.files.getlist("file[]")
         for file in uploaded_files:
             if file and allowed_file(file.filename):
-            print("allowed is okay")
-            filename = file.filename
-            img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
-            text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
-            page= extract_text(img)
-            print(len(text),"p:",len(page))
-            if(len(text)<200): 
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
-            else: 
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
-                insert_into_KB(page=page,filename=file.filename)         
+                print("allowed is okay")
+                filename = file.filename
+                img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+                text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
+                page= extract_text(img)
+                print(len(text),"p:",len(page))
+                if(len(text)<200): 
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
+                else: 
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
+                    insert_into_KB(page=page,filename=file.filename)         
 
     return render_template("index.html")
 

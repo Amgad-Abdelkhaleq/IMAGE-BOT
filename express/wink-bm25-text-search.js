@@ -1,53 +1,4 @@
-//     wink-bm25-text-search
-//     Fast Full Text Search based on BM25F
-//
-//     Copyright (C) 2017-19  GRAYPE Systems Private Limited
-//
-//     This file is part of “wink-bm25-text-search”.
-//
-//     Permission is hereby granted, free of charge, to any person obtaining a
-//     copy of this software and associated documentation files (the "Software"),
-//     to deal in the Software without restriction, including without limitation
-//     the rights to use, copy, modify, merge, publish, distribute, sublicense,
-//     and/or sell copies of the Software, and to permit persons to whom the
-//     Software is furnished to do so, subject to the following conditions:
-//
-//     The above copyright notice and this permission notice shall be included
-//     in all copies or substantial portions of the Software.
-//
-//     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-//     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-//     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-//     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-//     DEALINGS IN THE SOFTWARE.
-
-//
 var helpers = require( 'wink-helpers' );
-
-/* eslint guard-for-in: 0 */
-/* eslint complexity: [ "error", 25 ] */
-
-// It is a BM25F In-memory Search engine for text and exposes following
-// methods:
-// 1. `definePrepTasks` allows to define field-wise (optional) pipeline of
-// functions that will be used to prepare each input prior to *search/predict*
-// and *addDoc/learn*.
-// 2. `defineConfig` sets up the configuration for *field-wise weights*,
-// *BM25F parameters*, and **field names whoes original value** needs to be retained.
-// 3. `addDoc/learn` adds a document using its unique id. The document is supplied
-// as an Javascript object, where each property is the field of the document
-// and its value is the text.
-// 4. `consolidate` learnings prior to search/predict.
-// 5. `search/predict` searches for the input text and returns the resultant
-// document ids, sorted by their relevance along with the score. The number of
-// results returned can be controlled via a limit argument that defaults to **10**.
-// The last optional argument is a filter function that must return a `boolean`
-// value, which is used to filter documents.
-// 6. `exportJSON` exports the learnings in JSON format.
-// 7. `importJSON` imports the learnings from JSON that may have been saved on disk.
-// 8. `reset` all the learnings except the preparatory tasks.
 var bm25fIMS = function () {
   // Preparatory tasks that are executed on the `addDoc` & `search` input.
   var pTasks = [];
@@ -133,16 +84,6 @@ var bm25fIMS = function () {
   // ### Exposed Functions
 
   // #### Define Prep Tasks
-
-  // Defines the `tasks` required to prepare the input for `addDoc` and `search()`
-  // The `tasks` should be an array of functions; using these function a simple
-  // pipeline is built to serially transform the input to the output.
-  // It validates the `tasks` before updating the `pTasks`.
-  // If validation fails it throws an appropriate error.
-  // Tasks can be defined separately for each field. However if the field is not
-  // specified (i.e. `null` or `undefined`), then the `tasks` become default.
-  // Note, `field = 'search'` is reserved for prep tasks for search string; However
-  // if the same is not specified, the default tasks are used for pre-processing.
   var definePrepTasks = function ( tasks, field ) {
     if ( config === null ) {
       throw Error( 'winkBM25S: Config must be defined before defining prepTasks.' );
@@ -171,23 +112,6 @@ var bm25fIMS = function () {
   }; // definePrepTasks()
 
   // #### Define Config
-
-  // Defines the configuration for BM25F using `fldWeights` and `bm25Params`
-  // properties of `cfg` object.</br>
-  // The `fldWeights` defines the weight for each field of the document. This gives
-  // a semantic nudge to search and are used as a mutiplier to the count
-  // (frequency) of each token contained in that field of the document. It should
-  // be a JS object containing `field-name/value` pairs. If a field's weight is
-  // not defined, that field is **ignored**. The field weights must be defined before
-  // attempting to add a document via `addDoc()`; they can only be defined once.
-  // If any document's field is not defined here then that field is **ignored**.
-  // </br>
-  // The `k`, `b` and `k1` properties of `bm25Params` object define the smoothing
-  // factor for IDF, degree of normalization for TF, and saturation control factor
-  // respectively for the BM25F. Their default values are **1**, **0.75**, and
-  // **1.2**.<br/>
-  // The `ovFieldNames` is an array of field names whose original value needs to
-  // be retained.
   var defineConfig = function ( cfg ) {
     if ( learned ) {
       throw Error( 'winkBM25S: config must be defined before learning/addition starts!' );
@@ -371,15 +295,6 @@ var bm25fIMS = function () {
   }; // consolidate()
 
   // #### Search
-
-  // Searches the `text` and return `limit` results. If `limit` is not sepcified
-  // then it will return a maximum of **10** results. The `result` is an array of
-  // containing `doc id` and `score` pairs array. If the `text` is not found, an
-  // empty array is returned. The `text` must be a string. The argurment `filter`
-  // is like `filter` of JS Array; it receive an object containing document's
-  // retained field name/value pairs along with the `params` (which is passed as
-  // the second argument). It is useful in limiting the search space or making the
-  // search more focussed.
   var search = function ( text, limit, filter, params ) {
     // Predict/Search only if learnings have been consolidated!
     if ( !consolidated ) {

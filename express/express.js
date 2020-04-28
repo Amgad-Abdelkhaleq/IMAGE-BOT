@@ -1,14 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var bm25_model = require("./BM25"); 
- 
 var app = express();
 
-
-// ans="this is the answer"
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
- 
 app.post("/postdata", (req, res) => {
     var question = req.body.question;
     //var  KB = req.body.KB;

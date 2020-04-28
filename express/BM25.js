@@ -19,30 +19,20 @@ var pipe = [
 var query;
 
 // Step I: Define config
-// Only field weights are required in this example.
 engine.defineConfig( { fldWeights: { body: 1 } } );
 // Step II: Define PrepTasks pipe.
-// Set up 'default' preparatory tasks i.e. for everything else
 engine.definePrepTasks( pipe );
-
 // Step III: Add Docs
-// Add documents now...
 docs.forEach( function ( doc, i ) {
-  // Note, 'i' becomes the unique id for 'doc'
   engine.addDoc( doc, i );
 } );
-
 // Step IV: Consolidate
 // Consolidate before searching
 engine.consolidate();
 
 module.exports={
 find_ans: function get_answer(query){ // Load sample data (load any other JSON data instead of sample)
-// All set, start searching!
-// `results` is an array of [ doc-id, score ], sorted by 
 var results = engine.search(query);
- // -> 1 entries found.
-// results[ 0 ][ 0 ] i.e. the top result is:
 try {
     return {"Answer": docs[ results[ 0 ][ 0 ] ].body,"Number_answers_found":results.length,"image_name": docs[ results[ 0 ][ 0 ] ].image,"type":"QA"}
 } catch (error) {

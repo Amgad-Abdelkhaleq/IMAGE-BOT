@@ -4,7 +4,6 @@ import os
 
 
 #tags_list=[] 
-
 #exist KB to test find_tag only 
 tags_list= [{'image': '1.jpg', 'tags': {'', 'mohamed', 'co founder/managin', 'varg', 'ss', 'ismail', 'im', 'director', 'salama', 'at', 'tayarah', 'in', 'el-a@'}}, {'image': '2.jpg', 'tags': {'google'}}, {'image': '3.JPG', 'tags': {'the', '', 'things', '(*', 'tof'}}, {'image': '4.jpg', 'tags': {'', 'uta', 'eal'}}, {'image': '5.JPG', 'tags': {'eb.\noo'}}, {'image': '6.jpg', 'tags': {'ond', 'incorta.', 'ee'}}, {'image': 'blur.jpg', 'tags': set()}]
 
@@ -17,14 +16,9 @@ def extract_images_tags(folder=os.path.join(os.getcwd(),"static/images/photo")):
         for cropped_boxes in cropped_images: 
             tags=set()
             for cropped_box in cropped_boxes:
-                # plt.imshow(cropped_box)
-                # plt.figure()
                 tags.add(extract_text(cropped_box,custom_config = r'-l eng -c tessedit_char_whitelist=0123456789abcdefghijklmnopqrstuvwxyz --psm 6').lower())
             tags_list.append({"image":filename , "tags":tags}) 
-        # # Visualization
-        # for image_path, boxes in zip(image_paths,all_boxes):
-        #   image_with_boxes_path = keras_craft.draw_boxes_on_image(image_path, boxes)
-        #   print(image_with_boxes_path)
+
     return tags_list
 
 # print(extract_images_tags())
