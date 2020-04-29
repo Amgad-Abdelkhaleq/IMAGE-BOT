@@ -12,6 +12,6 @@ app.post("/postdata", (req, res) => {
     res.send(bm25_model.find_ans(question));
 });
 
-port=4000
+port=6000
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 
