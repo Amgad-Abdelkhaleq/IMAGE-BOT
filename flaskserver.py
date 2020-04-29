@@ -6,7 +6,7 @@ import requests
 import json
 from helpers import *
 from preprocess import *
-from tag_extraction import find_tag
+from tag_extraction import *
 import os 
 
  
@@ -83,6 +83,7 @@ def uploader():
                 print(len(text),"p:",len(page))
                 if(len(text)<200): 
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
+                    extract_images_tags(filename)
                 else: 
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
                     insert_into_KB(page=page,filename=file.filename)         
