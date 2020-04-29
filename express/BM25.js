@@ -1,3 +1,5 @@
+module.exports={
+  find_ans: function get_answer(query){ // Load sample data (load any other JSON data instead of sample)
 /* eslint no-console: 0 */
 // Load wink-bm25-text-search
 var bm25 = require( './wink-bm25-text-search' );
@@ -30,8 +32,6 @@ docs.forEach( function ( doc, i ) {
 // Consolidate before searching
 engine.consolidate();
 
-module.exports={
-find_ans: function get_answer(query){ // Load sample data (load any other JSON data instead of sample)
 var results = engine.search(query);
 try {
     return {"Answer": docs[ results[ 0 ][ 0 ] ].body,"Number_answers_found":results.length,"image_name": docs[ results[ 0 ][ 0 ] ].image,"type":"QA"}

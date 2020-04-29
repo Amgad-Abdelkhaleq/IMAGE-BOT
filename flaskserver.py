@@ -7,9 +7,8 @@ import json
 from helpers import *
 from preprocess import *
 from tag_extraction import *
-import os 
 
- 
+
 
 app = Flask(__name__)
 #create tags KB by calling this func or use exists KB in tag_extension.py
@@ -59,7 +58,7 @@ def get_bot_response():
             newdata = {"question": userText} # this is the new data we are going to send to the Node server
             # now immediately sending a post request with new data
             try:
-                post = requests.post('http://localhost:3000/postdata', json=newdata) # the POST request      
+                post = requests.post('http://localhost:4000/postdata', json=newdata) # the POST request      
                 print(">>>>>>>>>flask recived this :",post.text)
                 result=json.loads(post.text) 
                 return result
@@ -80,19 +79,23 @@ def uploader():
                 img = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
                 text= extract_text(img,custom_config = r'-l eng -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz --oem 1')
                 page= extract_text(img)
-                print(len(text),"p:",len(page))
+                print(filename,": ",len(text),"p:",len(page))
                 if(len(text)<200): 
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"photo" ,filename))
-                    extract_images_tags(filename)
+                    prev_tagged=os.listdir(os.path.join(app.config['UPLOAD_FOLDER'],"photo"))
+                    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],"photo",filename), img)
+                    try:
+                       extract_images_tags(prev_tagged)
+                    except Exception as e: 
+                        print(e)
                 else: 
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename))
+                    cv2.imwrite(os.path.join(app.config['UPLOAD_FOLDER'],"text-based",filename), img)
                     insert_into_KB(page=page,filename=file.filename)         
 
     return render_template("index.html")
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=5000,debug=True)
+   app.run(host='localhost', port=5010,debug=True)
 
 
 
