@@ -1,7 +1,7 @@
 # IMAGE-BOT
 chatbot for interaction with the text content of images like QA, text detecting and extraction this project presents an approach of converting digital images into a personal knowledge base that enables users to make more benefits of their digital images and find an answer for any relevant questions of its contained information. It also enables the user to extract the text from a photo of printed paper and search his photos by any text tag that exists in it.
 
-## system features
+## System features
 ### Optical character recognition
 ![Screenshot (51)](https://user-images.githubusercontent.com/36202618/80548389-1e644980-89bb-11ea-99b6-1e41f49e3f0c.png)
 
@@ -16,5 +16,31 @@ chatbot for interaction with the text content of images like QA, text detecting 
 
 
 
-### searching images with text tags
+### Searching images with text tags
 ![Screenshot (52)](https://user-images.githubusercontent.com/36202618/80548525-6f743d80-89bb-11ea-81a1-305ba9a21c90.png)
+
+## Set up 
+```bash
+$ git clone https://github.com/Amgad-Abdelkhaleq/IMAGE-BOT
+$ sudo apt update
+$ pip3 install flask
+$ pip3 install requests
+$ pip3 install opencv-python
+$ pip3 install -U numpy
+$ pip3 install pytesseract
+$ sudo apt install tesseract-ocr
+$ sudo apt install libtesseract-dev
+$ pip install git+https://github.com/notAI-tech/keras-craft 
+$ cd express/
+$ npm install
+```
+## Run 
+```bash
+$ python3 flaskserver.py
+$ node express.js
+```
+
+## References
+https://github.com/notAI-tech/keras-craft 
+https://github.com/winkjs/wink-bm25-text-search
+
