@@ -4,6 +4,7 @@ chatbot for interaction with the text content of images like QA, text detecting 
 
 ## Set up 
 ```bash
+$ git clone https://github.com/Amgad-Abdelkhaleq/IMAGE-BOT
 $ bash commands.txt
 ```
 ## Run 
