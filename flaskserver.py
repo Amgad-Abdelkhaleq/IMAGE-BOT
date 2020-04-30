@@ -54,7 +54,7 @@ def get_bot_response():
             newdata = {"question": userText} # this is the new data we are going to send to the Node server
             # now immediately sending a post request with new data
             try:
-                post = requests.post('http://localhost:6000/postdata', json=newdata) # the POST request      
+                post = requests.post('http://localhost:7000/postdata', json=newdata) # the POST request      
                 print(">>>>>>>>>flask recived this :",post.text)
                 result=json.loads(post.text) 
                 return result
@@ -89,7 +89,7 @@ def uploader():
 
 
 if __name__ == "__main__":
-   app.run(host='localhost', port=5026,debug=True)
+   app.run(host='localhost', port=5002,debug=True)
 
 
 

@@ -3,10 +3,6 @@ from helpers import *
 import os
 import json 
 
-
-#test tags_KB 
-#[{'image': '1.jpg', 'tags': {'', 'mohamed', 'co founder/managin', 'varg', 'ss', 'ismail', 'im', 'director', 'salama', 'at', 'tayarah', 'in', 'el-a@'}}, {'image': '2.jpg', 'tags': {'google'}}, {'image': '3.JPG', 'tags': {'the', '', 'things', '(*', 'tof'}}, {'image': '4.jpg', 'tags': {'', 'uta', 'eal'}}, {'image': '5.JPG', 'tags': {'eb.\noo'}}, {'image': '6.jpg', 'tags': {'ond', 'incorta.', 'ee'}}, {'image': 'blur.jpg', 'tags': set()}]
-
 detector = keras_craft.Detector()
 
 def extract_images_tags(filename):
@@ -44,4 +40,4 @@ def find_tag(entered_tag):
     return "not found"    
 
 
-#print(">",find_tag("AMR SALAMA"))
+
