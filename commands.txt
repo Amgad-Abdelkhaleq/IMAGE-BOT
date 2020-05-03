@@ -7,5 +7,3 @@ pip3 install pytesseract
 sudo apt install tesseract-ocr
 sudo apt install libtesseract-dev
 pip install git+https://github.com/notAI-tech/keras-craft 
-cd express/
-npm install
