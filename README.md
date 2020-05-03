@@ -6,12 +6,13 @@ chatbot for interaction with the text content of images like QA, text detecting 
 ```bash
 $ git clone https://github.com/Amgad-Abdelkhaleq/IMAGE-BOT
 $ bash commands.txt
+$ cd express/
+$ npm install
 ```
 ## Run 
 ```bash
 $ python3 flaskserver.py
-$ cd express/
-$ node express.js
+$ node express/express.js
 ```
 
 
