@@ -33,7 +33,6 @@ var bm25fIMS = function () {
   // Index's initial value, incremented with every new word.
   var currTokenIndex = 0;
 
-  // ### Private functions
 
   // #### Perpare Input
 

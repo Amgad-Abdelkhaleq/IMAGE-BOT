@@ -5,8 +5,7 @@ import pprint as pp
 import json 
 
 
-def split_page(text,min_length=200):
-    include_line_breaks=False
+def split_page(text,min_length=200,include_line_breaks=False):
     paragraphs = re.split("\n\n(?=\u2028|[A-Z-0-9])", text)
     list_par = []
     temp_para = ""  # variable that stores paragraphs with length<min_length
@@ -40,20 +39,22 @@ def split_page(text,min_length=200):
     return list_par
 
 
-
+#function to update knowlegde base with text of new uploaded images 
 def insert_into_KB(page,filename): #input image text and name 
     paragraphs=[]
-    p_threshold=150
+    p_threshold=150 #set threshold on paragraph length to 150 chars
     fname = os.path.join(os.getcwd(),"static/KB/output.json")                        
-    KB = json.load(open(fname,'r')) # load the current data
+    KB = json.load(open(fname,'r')) # load the current data from knowledge base 
     if (len(page) > p_threshold) :
+        #split page text into small paragraphs
         paragraphs= split_page(page)
         for p in paragraphs: 
             if len(p)> p_threshold :
+                    #store image name to be retrived to the user in chat 
                     data_dict= {"image":filename ,"body":p}
                     print(data_dict,"\n")
-                    KB.append(data_dict) # append the dictionary to the list
-    # then we dump it to the file.
+                    KB.append(data_dict) # append the new dictionary to the KB list
+    # dump it to KB json file.
     json.dump(KB, open(fname, 'w'))
 
 

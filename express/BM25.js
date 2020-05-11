@@ -20,7 +20,7 @@ var pipe = [
 // Contains search query.
 var query;
 
-// Step I: Define config
+// Step I: Define config and set doc priorty 
 engine.defineConfig( { fldWeights: { body: 1 } } );
 // Step II: Define PrepTasks pipe.
 engine.definePrepTasks( pipe );
@@ -34,6 +34,7 @@ engine.consolidate();
 
 var results = engine.search(query);
 try {
+    //return answer to flask server for recived question if answer does not exist it will send not found   
     return {"Answer": docs[ results[ 0 ][ 0 ] ].body,"Number_answers_found":results.length,"image_name": docs[ results[ 0 ][ 0 ] ].image,"type":"QA"}
 } catch (error) {
     return {"Answer":"not found","image_name":'',"type":"QA"};
