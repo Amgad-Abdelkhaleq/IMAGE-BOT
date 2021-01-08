@@ -34,6 +34,9 @@ $ node express/express.js
 ### Searching images with text tags
 ![Screenshot (52)](https://user-images.githubusercontent.com/36202618/80548525-6f743d80-89bb-11ea-81a1-305ba9a21c90.png)
 
+## Demo
+<img src="https://drive.google.com/uc?export=view&id=13rYTdb1nE6f9kZzDqKnQvoFy3G-Mq82d">
+
 ## References
 https://github.com/notAI-tech/keras-craft 
 https://github.com/winkjs/wink-bm25-text-search
